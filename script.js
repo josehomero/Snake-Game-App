@@ -1,31 +1,22 @@
-var canvas = document.getElementById('game-canvas');
+const canvas = document.getElementById('game-canvas');
+const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'gray';
-
-var canvasContext;
-
+let snakeMotion = 10;
 
 window.onload = function() {
-    canvas = document.getElementById('game-canvas');
-    canvasContext = canvas.getContext('2d');
+  const canvas = document.getElementById('game-canvas');
+  const canvasContext = canvas.getContext('2d')
 
-    var framesPerSecond = 30
-    setInterval(function() {
-        moveEverything();
-        drawEverything();
-    }, 1000/framesPerSecond);
+  setInterval(draw, 1000)
 }
 
-function moveEverything() {
-
+function draw() {
+  snakeMotion += 20
+  canvasContext.beginPath();
+  canvasContext.rect(snakeMotion, 20, 60, 20);
+  canvasContext.fillStyle = "#FF0000";
+  canvasContext.fill();
+  canvasContext.closePath();
 }
 
-//function drawEverything() {
-//    colorRect(100, 300, canvas.width, canvas.height, 'gray');
-    //colorRect(ballX, 100, 10, 10, 'red');
-//}
-
-//function colorRect(leftX, topY, width, height, drawColor) {
-//    canvasContext.fillStyle = drawColor;
-  //  canvasContext.fillRect(leftX, topY, width, height);
-//}
