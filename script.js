@@ -21,7 +21,7 @@ function draw() {
   canvasContext.closePath();
   snakeMotion += 20
 
-  canvas.addEventListener('keydown.which: 37', function (e) { // me trying to make an eventListener to make the snake go left
+  canvas.addEventListener('keydown.which: 37', function (e) { // me trying to make an eventListener to make the snake go left, which: 37 is the left arrow key
     if (snakeMoveLeft === false) {
       snakeMotion -= 20
     }
