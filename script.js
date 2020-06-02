@@ -11,6 +11,11 @@ let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
 window.onload = function () { // function to paint canvas and set interval
+  randomApplePlaceX = Math.floor(Math.random() * canvas.width);
+  randomApplePlaceY = Math.floor(Math.random() * canvas.height);
+  console.log(randomApplePlaceY);
+  console.log(randomApplePlaceX);
+
   let framesPerSecond = 30;
   setInterval(function() {
     moveTheSnake();
@@ -55,7 +60,7 @@ document.addEventListener('keydown', function (e) {
     return;
   }
 
-  if(e.which === 38) {/
+  if(e.which === 38) {
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = -20;
     return;
@@ -78,7 +83,7 @@ function drawEverything() {
   canvasContext.closePath();
 
   canvasContext.fillStyle = 'lightCoral';
-  canvasContext.fillRect(20, 80, 20, 20) //Code for the apple
+  canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20) //Code for the apple
 
 }
 
