@@ -1,3 +1,5 @@
+const DEBUG = true;
+
 const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
@@ -12,21 +14,22 @@ let randomApplePlaceY = 0;
 
 window.onload = function () { // function to paint canvas and set interval
   randomApplePlaceX = Math.floor(Math.random() * canvas.width);
-  let randomApplePlaceXX = Math.ceil(randomApplePlaceX/ 20) * 20;
+  randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
+  if (randomApplePlaceX === 500) {
+    randomApplePlaceX = 480;
+  }
 
-  randomApplePlaceY = Math.floor(Math.random() * canvas.height);
-  let randomApplePlaceYY = Math.ceil(randomApplePlaceY/ 20) * 20;
-
-//if (randomApplePlaceXX ===) {}
-
-  console.log(randomApplePlaceXX);
-  console.log(randomApplePlaceYY);
+  randomApplePlaceY = Math.floor(Math.random() * canvas.width);
+  randomApplePlaceY = Math.ceil(randomApplePlaceY / 20) * 20;
+  if (randomApplePlaceY === 500) {
+    randomApplePlaceY = 480;
+  }
 
   let framesPerSecond = 30;
-  setInterval(function() {
+  setInterval(function () {
     moveTheSnake();
     drawEverything();
-  }, 10000/framesPerSecond)
+  }, 10000 / framesPerSecond)
 }
 
 function moveTheSnake() {
@@ -54,7 +57,7 @@ function moveTheSnake() {
 }
 
 document.addEventListener('keydown', function (e) {
-  if(e.which === 37) {
+  if (e.which === 37) {
     snakeSpeedHorizontal = -20
     snakeSpeedVertical = 0;
     return;
@@ -66,7 +69,7 @@ document.addEventListener('keydown', function (e) {
     return;
   }
 
-  if(e.which === 38) {
+  if (e.which === 38) {
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = -20;
     return;
@@ -78,10 +81,10 @@ document.addEventListener('keydown', function (e) {
     return;
   }
 
- })
+})
 
 function drawEverything() {
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height); 
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   canvasContext.beginPath();
   canvasContext.rect(snakeHeadX, snakeHeadY, 60, 20);
   canvasContext.fillStyle = "skyblue";
