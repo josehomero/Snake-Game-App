@@ -12,10 +12,12 @@ let randomApplePlaceY = 0;
 
 window.onload = function () { // function to paint canvas and set interval
   randomApplePlaceX = Math.floor(Math.random() * canvas.width);
-  let randomApplePlaceXX = randomApplePlaceX - (randomApplePlaceX % 20);
+  let randomApplePlaceXX = Math.ceil(randomApplePlaceX/ 20) * 20;
 
   randomApplePlaceY = Math.floor(Math.random() * canvas.height);
-  let randomApplePlaceYY = randomApplePlaceY - (randomApplePlaceY % 20);
+  let randomApplePlaceYY = Math.ceil(randomApplePlaceY/ 20) * 20;
+
+//if (randomApplePlaceXX ===) {}
 
   console.log(randomApplePlaceXX);
   console.log(randomApplePlaceYY);
