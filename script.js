@@ -17,13 +17,24 @@ window.onload = function () { // function to paint canvas and set interval
   randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
   if (randomApplePlaceX === 500) {
     randomApplePlaceX = 480;
+    return;
   }
 
-  randomApplePlaceY = Math.floor(Math.random() * canvas.width);
+  randomApplePlaceY = Math.floor(Math.random() * canvas.height);
   randomApplePlaceY = Math.ceil(randomApplePlaceY / 20) * 20;
   if (randomApplePlaceY === 500) {
     randomApplePlaceY = 480;
+    return;
   }
+  
+  if(randomApplePlaceX === snakeHeadX || randomApplePlaceX === snakeHeadY || randomApplePlaceY === snakeHeadX || randomApplePlaceY === snakeHeadY) {
+    randomApplePlaceX = randomApplePlaceX + 20
+    randomApplePlaceY = randomApplePlaceY + 20
+    console.log(randomApplePlaceY, randomApplePlaceX);
+    return
+  }
+
+  console.log(randomApplePlaceX, randomApplePlaceY);
 
   let framesPerSecond = 30;
   setInterval(function () {
@@ -31,7 +42,7 @@ window.onload = function () { // function to paint canvas and set interval
     drawEverything();
   }, 10000 / framesPerSecond)
 }
-
+//debugger;
 function moveTheSnake() {
   snakeHeadX = snakeHeadX + snakeSpeedHorizontal;
   snakeHeadY = snakeHeadY + snakeSpeedVertical;
