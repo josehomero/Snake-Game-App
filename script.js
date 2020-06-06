@@ -13,28 +13,12 @@ let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
 window.onload = function () { // function to paint canvas and set interval
-  randomApplePlaceX = Math.floor(Math.random() * canvas.width);
-  randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
-  if (randomApplePlaceX === 500) {
-    randomApplePlaceX = 480;
-    return;
-  }
+  setApplePosition()
 
-  randomApplePlaceY = Math.floor(Math.random() * canvas.height);
-  randomApplePlaceY = Math.ceil(randomApplePlaceY / 20) * 20;
-  if (randomApplePlaceY === 500) {
-    randomApplePlaceY = 480;
-    return;
-  }
-  
-  if(randomApplePlaceX === snakeHeadX || randomApplePlaceX === snakeHeadY || randomApplePlaceY === snakeHeadX || randomApplePlaceY === snakeHeadY) {
+  if (randomApplePlaceX === snakeHeadX || randomApplePlaceX === snakeHeadY || randomApplePlaceY === snakeHeadX || randomApplePlaceY === snakeHeadY) {
     randomApplePlaceX = randomApplePlaceX + 20
     randomApplePlaceY = randomApplePlaceY + 20
-    console.log(randomApplePlaceY, randomApplePlaceX);
-    return
   }
-
-  console.log(randomApplePlaceX, randomApplePlaceY);
 
   let framesPerSecond = 30;
   setInterval(function () {
@@ -42,28 +26,38 @@ window.onload = function () { // function to paint canvas and set interval
     drawEverything();
   }, 10000 / framesPerSecond)
 }
-//debugger;
+
+function setApplePosition() {
+  randomApplePlaceX = Math.floor(Math.random() * canvas.width);
+  randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
+  if (randomApplePlaceX === 500) {
+    randomApplePlaceX = 480;
+  }
+
+  randomApplePlaceY = Math.floor(Math.random() * canvas.height);
+  randomApplePlaceY = Math.ceil(randomApplePlaceY / 20) * 20;
+  if (randomApplePlaceY === 500) {
+    randomApplePlaceY = 480;
+  }
+}
+
 function moveTheSnake() {
   snakeHeadX = snakeHeadX + snakeSpeedHorizontal;
   snakeHeadY = snakeHeadY + snakeSpeedVertical;
   if (snakeHeadX > canvas.width - 60) {
-    alert('game over');
-    return;
+    return alert('game over');
   }
 
   if (snakeHeadX < 0) {
-    alert('game over')
-    return;
+    return alert('game over')
   }
 
   if (snakeHeadY > canvas.height - 20) {
-    alert('game over');
-    return;
+    return alert('game over');
   }
 
   if (snakeHeadY < 0) {
-    alert('game over');
-    return;
+    return alert('game over');
   }
 }
 
