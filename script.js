@@ -72,17 +72,23 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   if (e.which === 37) { // left arrow
     snakeSpeedHorizontal = -20
     snakeSpeedVertical = 0;
+    snakeBodyY = snakeHeadY
+    snakeBodyX = snakeHeadX  + 25;
     return;
   }
 
   if (e.which === 39) { // right arrow
     snakeSpeedHorizontal = 20
     snakeSpeedVertical = 0;
+    snakeBodyY = snakeHeadY
+    snakeBodyX = snakeHeadX - 25;
+
     return;
   }
 
   if (e.which === 38) { //up arrow
     snakeSpeedHorizontal = 0;
+    snakeSpeedVertical = -20;
     snakeBodyX = snakeHeadX
     snakeBodyY = snakeHeadY - 25;
   }
@@ -90,6 +96,9 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   if (e.which === 40) { //down arrow
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = 20;
+    snakeBodyX = snakeHeadX
+    snakeBodyY = snakeHeadY + 25;
+
     return;
   }
 
