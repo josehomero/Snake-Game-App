@@ -19,7 +19,7 @@ window.onload = function () { // function to paint canvas and set interval
   setApplePosition()
 
   if (randomApplePlaceX === snakeHeadX || randomApplePlaceX === snakeHeadY || randomApplePlaceY === snakeHeadX || randomApplePlaceY === snakeHeadY) {
-    randomApplePlaceX = randomApplePlaceX + 20
+    randomApplePlaceX = randomApplePlaceX + 20 //if statement to not let the apple land on the snake
     randomApplePlaceY = randomApplePlaceY + 20
   }
 
@@ -30,7 +30,7 @@ window.onload = function () { // function to paint canvas and set interval
   }, 10000 / framesPerSecond)
 }
 
-function setApplePosition() {
+function setApplePosition() { //function to move apple randomly 
   randomApplePlaceX = Math.floor(Math.random() * canvas.width);
   randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
   if (randomApplePlaceX === 500) {
@@ -44,14 +44,14 @@ function setApplePosition() {
   }
 }
 
-function moveTheSnake() {
-  snakeHeadX = snakeHeadX + snakeSpeedHorizontal;
-  snakeHeadY = snakeHeadY + snakeSpeedVertical;
+function moveTheSnake() { // function to move snake
+  snakeHeadX = snakeHeadX + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
+  snakeHeadY = snakeHeadY + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
 
   snakeBodyX = snakeBodyX + snakeSpeedHorizontal;
   snakeBodyY = snakeBodyY + snakeSpeedVertical;
 
-  if (snakeHeadX > canvas.width - 60) {
+  if (snakeHeadX > canvas.width - 60) {  //if statements to detect the walls
     return alert('game over');
   }
 
@@ -68,7 +68,7 @@ function moveTheSnake() {
   }
 }
 
-document.addEventListener('keydown', function (e) {
+document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
   if (e.which === 37) { // left arrow
     snakeSpeedHorizontal = -20
     snakeSpeedVertical = 0;
@@ -83,12 +83,8 @@ document.addEventListener('keydown', function (e) {
 
   if (e.which === 38) { //up arrow
     snakeSpeedHorizontal = 0;
-    snakeSpeedVertical = -20;
-    snakeHeadX = snakeHeadY;
-    snakeHeadY = snakeHeadX
-    snakeBodyX = snakeBodyY
-    snakeBodyY = snakeBodyX
-    return;
+    snakeBodyX = snakeHeadX
+    snakeBodyY = snakeHeadY - 25;
   }
 
   if (e.which === 40) { //down arrow
@@ -100,7 +96,7 @@ document.addEventListener('keydown', function (e) {
 })
 
 function drawEverything() {
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
   canvasContext.beginPath();
   canvasContext.rect(snakeHeadX, snakeHeadY, 20, 20);
   canvasContext.fillStyle = "skyblue";
@@ -108,7 +104,7 @@ function drawEverything() {
   canvasContext.closePath();
 
   canvasContext.beginPath();
-  canvasContext.rect(snakeBodyX, snakeBodyY, 20, 20);
+  canvasContext.rect(snakeBodyX, snakeBodyY, 20, 20); // the snake body
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
   canvasContext.closePath();
