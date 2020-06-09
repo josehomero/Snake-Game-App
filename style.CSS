@@ -1,3 +1,15 @@
 h1 {
     text-align: center;
 }
+
+#snake-score {
+    position: absolute;
+    top: 8px;
+    left: 16px;
+}
+
+#game-directions {
+    position: absolute;
+    bottom: 8px;
+    right: 16px;
+}
