@@ -4,10 +4,13 @@ const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
-let snakeHeadX = 220;
-let snakeHeadY = 240;
+let snakeHeadX = 230;
+let snakeHeadY = 230;
 let snakeSpeedHorizontal = 0;
 let snakeSpeedVertical = 0;
+let snakeBodyX = 255;
+let snakeBodyY = 230;
+
 
 let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
@@ -44,6 +47,10 @@ function setApplePosition() {
 function moveTheSnake() {
   snakeHeadX = snakeHeadX + snakeSpeedHorizontal;
   snakeHeadY = snakeHeadY + snakeSpeedVertical;
+
+  snakeBodyX = snakeBodyX + snakeSpeedHorizontal;
+  snakeBodyY = snakeBodyY + snakeSpeedVertical;
+
   if (snakeHeadX > canvas.width - 60) {
     return alert('game over');
   }
@@ -62,25 +69,29 @@ function moveTheSnake() {
 }
 
 document.addEventListener('keydown', function (e) {
-  if (e.which === 37) {
+  if (e.which === 37) { // left arrow
     snakeSpeedHorizontal = -20
     snakeSpeedVertical = 0;
     return;
   }
 
-  if (e.which === 39) {
+  if (e.which === 39) { // right arrow
     snakeSpeedHorizontal = 20
     snakeSpeedVertical = 0;
     return;
   }
 
-  if (e.which === 38) {
+  if (e.which === 38) { //up arrow
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = -20;
+    snakeHeadX = snakeHeadY;
+    snakeHeadY = snakeHeadX
+    snakeBodyX = snakeBodyY
+    snakeBodyY = snakeBodyX
     return;
   }
 
-  if (e.which === 40) {
+  if (e.which === 40) { //down arrow
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = 20;
     return;
@@ -91,7 +102,13 @@ document.addEventListener('keydown', function (e) {
 function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
   canvasContext.beginPath();
-  canvasContext.rect(snakeHeadX, snakeHeadY, 60, 20);
+  canvasContext.rect(snakeHeadX, snakeHeadY, 20, 20);
+  canvasContext.fillStyle = "skyblue";
+  canvasContext.fill();
+  canvasContext.closePath();
+
+  canvasContext.beginPath();
+  canvasContext.rect(snakeBodyX, snakeBodyY, 20, 20);
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
   canvasContext.closePath();
