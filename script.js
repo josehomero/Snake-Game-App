@@ -4,12 +4,14 @@ const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
-let snakeHeadX = 230;
-let snakeHeadY = 230;
+//let snakeHeadX = 240;
+//let snakeHeadY = 240;
+const snake = [
+  
+]
+
 let snakeSpeedHorizontal = 0;
 let snakeSpeedVertical = 0;
-let snakeBodyX = 255;
-let snakeBodyY = 230;
 
 
 let randomApplePlaceX = 0;//variables I want to move the apple randomly with
@@ -47,11 +49,9 @@ function setApplePosition() { //function to move apple randomly
 function moveTheSnake() { // function to move snake
   snakeHeadX = snakeHeadX + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
   snakeHeadY = snakeHeadY + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
+//console.log(snakeHeadX, snakeHeadY)
 
-  snakeBodyX = snakeBodyX + snakeSpeedHorizontal;
-  snakeBodyY = snakeBodyY + snakeSpeedVertical;
-
-  if (snakeHeadX > canvas.width - 60) {  //if statements to detect the walls
+  if (snakeHeadX > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
   }
 
@@ -72,33 +72,23 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   if (e.which === 37) { // left arrow
     snakeSpeedHorizontal = -20
     snakeSpeedVertical = 0;
-    snakeBodyY = snakeHeadY
-    snakeBodyX = snakeHeadX  + 25;
     return;
   }
 
   if (e.which === 39) { // right arrow
     snakeSpeedHorizontal = 20
     snakeSpeedVertical = 0;
-    snakeBodyY = snakeHeadY
-    snakeBodyX = snakeHeadX - 25;
-
     return;
   }
 
   if (e.which === 38) { //up arrow
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = -20;
-    snakeBodyX = snakeHeadX
-    snakeBodyY = snakeHeadY - 25;
   }
 
   if (e.which === 40) { //down arrow
     snakeSpeedHorizontal = 0;
     snakeSpeedVertical = 20;
-    snakeBodyX = snakeHeadX
-    snakeBodyY = snakeHeadY + 25;
-
     return;
   }
 
@@ -112,15 +102,7 @@ function drawEverything() {
   canvasContext.fill();
   canvasContext.closePath();
 
-  canvasContext.beginPath();
-  canvasContext.rect(snakeBodyX, snakeBodyY, 20, 20); // the snake body
-  canvasContext.fillStyle = "skyblue";
-  canvasContext.fill();
-  canvasContext.closePath();
-
   canvasContext.fillStyle = 'lightCoral';
   canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20) //Code for the apple
 
 }
-
-
