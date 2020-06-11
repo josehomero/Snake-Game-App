@@ -7,7 +7,9 @@ canvas.style.background = 'LightGreen';
 //let snakeHeadX = 240;
 //let snakeHeadY = 240;
 const snake = [
-  
+  {x: 240, y: 240},
+  {x: 260, y: 240},
+  {x: 280, y: 240}
 ]
 
 let snakeSpeedHorizontal = 0;
@@ -20,7 +22,7 @@ let randomApplePlaceY = 0;
 window.onload = function () { // function to paint canvas and set interval
   setApplePosition()
 
-  if (randomApplePlaceX === snakeHeadX || randomApplePlaceX === snakeHeadY || randomApplePlaceY === snakeHeadX || randomApplePlaceY === snakeHeadY) {
+  if (randomApplePlaceX === snake[0].x || randomApplePlaceX === snake[0].y || randomApplePlaceY === snake[0].x || randomApplePlaceY === snake[0].y) {
     randomApplePlaceX = randomApplePlaceX + 20 //if statement to not let the apple land on the snake
     randomApplePlaceY = randomApplePlaceY + 20
   }
@@ -47,24 +49,27 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
-  snakeHeadX = snakeHeadX + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
-  snakeHeadY = snakeHeadY + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
-//console.log(snakeHeadX, snakeHeadY)
+  snake[0].x = snake[0].x + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
+  snake[0].y = snake[0].y + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
 
-  if (snakeHeadX > canvas.width - 20) {  //if statements to detect the walls
+  if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
   }
 
-  if (snakeHeadX < 0) {
+  if (snake[0].x < 0) {
     return alert('game over')
   }
 
-  if (snakeHeadY > canvas.height - 20) {
+  if (snake[0].y > canvas.height - 20) {
     return alert('game over');
   }
 
-  if (snakeHeadY < 0) {
+  if (snake[0].y < 0) {
     return alert('game over');
+  }
+ 
+  if (snake[0].x === randomApplePlaceX && snake[0].y === randomApplePlaceY) {
+    return alert('you"ve eaten an apple')
   }
 }
 
@@ -97,7 +102,7 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
 function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
   canvasContext.beginPath();
-  canvasContext.rect(snakeHeadX, snakeHeadY, 20, 20);
+  canvasContext.rect(snake[0,1,2].x, snake[0,1,2].y, 20, 20);
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
   canvasContext.closePath();
