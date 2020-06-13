@@ -4,13 +4,13 @@ const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
-//let snakeHeadX = 240;
-//let snakeHeadY = 240;
 const snake = [
-  {x: 240, y: 240},
+  {x: 280, y: 240},
   {x: 260, y: 240},
-  {x: 280, y: 240}
+  {x: 240, y: 240}
 ]
+
+const snakeHead = snake[0];
 
 let snakeSpeedHorizontal = 0;
 let snakeSpeedVertical = 0;
@@ -49,13 +49,18 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
+  snakeHead.x = snakeHead.x + snakeSpeedHorizontal;
+  snakeHead.y = snakeHead.y + snakeSpeedVertical;
+
   snake.forEach(function (bodyPart) {
+ 
+   // console.log(snakeSpeedVertical,snakeSpeedVertical)
     bodyPart.x = bodyPart.x + snakeSpeedHorizontal;
     bodyPart.y = bodyPart.y + snakeSpeedVertical;
+
+   //console.log(snakeHead);
   });
 
-  snake.x = snake.x + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
-  snake.y = snake.y + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
 
   if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
@@ -110,7 +115,6 @@ function drawEverything() {
   snake.forEach(function (bodyPart) {
     canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20) 
   });
-  canvasContext.rect(snake[0,1,2].x, snake[0,1,2].y, 20, 20);
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
   canvasContext.closePath();
