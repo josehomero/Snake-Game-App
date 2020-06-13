@@ -49,8 +49,13 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
-  snake[0].x = snake[0].x + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
-  snake[0].y = snake[0].y + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
+  snake.forEach(function (bodyPart) {
+    bodyPart.x = bodyPart.x + snakeSpeedHorizontal;
+    bodyPart.y = bodyPart.y + snakeSpeedVertical;
+  });
+
+  snake.x = snake.x + snakeSpeedHorizontal; // adding snakeSpeedHorizontal to move the snake sideways
+  snake.y = snake.y + snakeSpeedVertical; // adding snakeSpeedVertical to move the snake virtical
 
   if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
@@ -102,6 +107,9 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
 function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
   canvasContext.beginPath();
+  snake.forEach(function (bodyPart) {
+    canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20) 
+  });
   canvasContext.rect(snake[0,1,2].x, snake[0,1,2].y, 20, 20);
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
