@@ -30,6 +30,7 @@ window.onload = function () { // function to paint canvas and set interval
   let framesPerSecond = 30;
   setInterval(function () {
     moveTheSnake();
+    detectingWalls();
     drawEverything();
   }, 10000 / framesPerSecond)
 }
@@ -49,19 +50,17 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
-  snakeHead.x = snakeHead.x + snakeSpeedHorizontal;
-  snakeHead.y = snakeHead.y + snakeSpeedVertical;
+ // snakeHead.x = snakeHead.x + snakeSpeedHorizontal;
+ // snakeHead.y = snakeHead.y + snakeSpeedVertical;
 
-  snake.forEach(function (bodyPart) {
- 
-   // console.log(snakeSpeedVertical,snakeSpeedVertical)
-    bodyPart.x = bodyPart.x + snakeSpeedHorizontal;
-    bodyPart.y = bodyPart.y + snakeSpeedVertical;
+for (let i = snake.length - 1; i >= 0; i--) {
+  snake[i].x = snake[i].x + snakeSpeedHorizontal;
+  snake[i].y = snake[i].y + snakeSpeedVertical;
+}
 
-   //console.log(snakeHead);
-  });
+}
 
-
+function detectingWalls(){
   if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
   }
