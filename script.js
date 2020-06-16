@@ -50,13 +50,15 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
- // snakeHead.x = snakeHead.x + snakeSpeedHorizontal;
- // snakeHead.y = snakeHead.y + snakeSpeedVertical;
-
 for (let i = snake.length - 1; i >= 0; i--) {
-  snake[i].x = snake[i].x + snakeSpeedHorizontal;
-  snake[i].y = snake[i].y + snakeSpeedVertical;
+  snake[i].x = snake[i - 1].x;
+  debugger;
+  snake[i].y = snake[i - 1].y;
+
+
 }
+snake.x = snake.x + snakeSpeedHorizontal;
+snake.y = snake.y + snakeSpeedVertical;
 
 }
 
