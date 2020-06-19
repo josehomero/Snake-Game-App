@@ -1,5 +1,6 @@
 const DEBUG = true;
 
+let score = 0;
 const canvas = document.getElementById('game-canvas');
 const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
@@ -7,8 +8,11 @@ canvas.style.background = 'LightGreen';
 const snake = [
   {x: 280, y: 240},
   {x: 260, y: 240},
-  {x: 240, y: 240}
+  {x: 240, y: 240},
+  {x: 220, y: 240},
+  {x: 200, y: 240}
 ]
+
 
 const snakeHead = snake[0];
 
@@ -31,6 +35,7 @@ window.onload = function () { // function to paint canvas and set interval
   setInterval(function () {
     moveTheSnake();
     detectingWalls();
+    eatenApple();
     drawEverything();
   }, 10000 / framesPerSecond)
 }
@@ -53,10 +58,12 @@ function moveTheSnake() { // function to move snake
   snake[0].x = snake[0].x + snakeSpeedHorizontal;
   snake[0].y = snake[0].y + snakeSpeedVertical;
 
-for (let i = snake.length; i > 0; --i) {
-  //debugger;
-  snake[i].x = snake[i - 1].x;
-  //console.log(snake[i].x)
+if(snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
+  for (let i = snake.length - 1; i > 0; --i) {
+    //debugger;
+    snake[i].x = snake[i - 1].x;
+    snake[i].y = snake[i - 1].y;
+  }
 }
 
 
@@ -78,9 +85,19 @@ function detectingWalls(){
   if (snake[0].y < 0) {
     return alert('game over');
   }
- 
+}
+
+function scored() {
+  score += 1;
+  let yourScore = document.getElementById('your-score');
+  yourScore.textContent = score;
+  yourScore.textContent = 'Your Score: ' + score;
+}
+
+function eatenApple (){
   if (snake[0].x === randomApplePlaceX && snake[0].y === randomApplePlaceY) {
-    return alert('you"ve eaten an apple')
+    scored();
+    setApplePosition()
   }
 }
 
