@@ -1,4 +1,4 @@
-const DEBUG = true;
+const DEBUG = false;
 
 let score = 0;
 const canvas = document.getElementById('game-canvas');
@@ -6,15 +6,15 @@ const canvasContext = canvas.getContext('2d')
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
 const snake = [
-  {x: 280, y: 240},
-  {x: 260, y: 240},
-  {x: 240, y: 240},
-  {x: 220, y: 240},
-  {x: 200, y: 240}
+  { x: 280, y: 240 },
+  { x: 260, y: 240 },
+  { x: 240, y: 240 },
+  { x: 220, y: 240 },
+  { x: 200, y: 240 },
+  { x: 180, y: 240 },
+  { x: 160, y: 240 },
+  { x: 140, y: 240 }
 ]
-
-
-const snakeHead = snake[0];
 
 let snakeSpeedHorizontal = 0;
 let snakeSpeedVertical = 0;
@@ -58,18 +58,16 @@ function moveTheSnake() { // function to move snake
   snake[0].x = snake[0].x + snakeSpeedHorizontal;
   snake[0].y = snake[0].y + snakeSpeedVertical;
 
-if(snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
-  for (let i = snake.length - 1; i > 0; --i) {
-    //debugger;
-    snake[i].x = snake[i - 1].x;
-    snake[i].y = snake[i - 1].y;
+  if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
+    for (let i = snake.length - 1; i > 0; --i) {
+      //debugger;
+      snake[i].x = snake[i - 1].x;
+      snake[i].y = snake[i - 1].y;
+    }
   }
 }
 
-
-}
-
-function detectingWalls(){
+function detectingWalls() {
   if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
     return alert('game over');
   }
@@ -87,6 +85,12 @@ function detectingWalls(){
   }
 }
 
+function snakeBitItself() {
+  if (snake[0].x == snake.values().x ||snake[0].y == snake.values().y) {
+    return alert('you lose')
+  }
+}
+
 function scored() {
   score += 1;
   let yourScore = document.getElementById('your-score');
@@ -94,10 +98,12 @@ function scored() {
   yourScore.textContent = 'Your Score: ' + score;
 }
 
-function eatenApple (){
+function eatenApple() {
   if (snake[0].x === randomApplePlaceX && snake[0].y === randomApplePlaceY) {
     scored();
     setApplePosition()
+    const headCopy = Object.assign({}, snake[0]);
+    snake.push(headCopy);
   }
 }
 
@@ -131,7 +137,7 @@ function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
   canvasContext.beginPath();
   snake.forEach(function (bodyPart) {
-    canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20) 
+    canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
   });
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
