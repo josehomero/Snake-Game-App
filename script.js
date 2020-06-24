@@ -31,11 +31,11 @@ window.onload = function () { // function to paint canvas and set interval
     randomApplePlaceY = randomApplePlaceY + 20
   }
 
-  let framesPerSecond = 30;
+  let framesPerSecond = 10;
   setInterval(function () {
     moveTheSnake();
     detectingWalls();
-    snakeBitItself();
+   // snakeBitItself();
     eatenApple();
     drawEverything();
   }, 10000 / framesPerSecond)
@@ -61,92 +61,94 @@ function moveTheSnake() { // function to move snake
 
   if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
     for (let i = snake.length - 1; i > 0; --i) {
-      //debugger;
       snake[i].x = snake[i - 1].x;
+      console.log(snake[i].x)
       snake[i].y = snake[i - 1].y;
     }
   }
 }
 
-function snakeBitItself() {
+/*function snakeBitItself() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
+      debugger;
       console.log(snake[i].x)
       return alert('game over')
     }
   }
+}*/
+
+function detectingWalls() {
+  if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
+    return alert('game over');
+  }
+
+  if (snake[0].x < 0) {
+    return alert('game over')
+  }
+
+  if (snake[0].y > canvas.height - 20) {
+    return alert('game over');
+  }
+
+  if (snake[0].y < 0) {
+    return alert('game over');
+  }
 }
-  function detectingWalls() {
-    if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
-      return alert('game over');
-    }
 
-    if (snake[0].x < 0) {
-      return alert('game over')
-    }
+function scored() {
+  score += 1;
+  let yourScore = document.getElementById('your-score');
+  yourScore.textContent = score;
+  yourScore.textContent = 'Your Score: ' + score;
+}
 
-    if (snake[0].y > canvas.height - 20) {
-      return alert('game over');
-    }
+function eatenApple() {
+  if (snake[0].x === randomApplePlaceX && snake[0].y === randomApplePlaceY) {
+    scored();
+    setApplePosition()
+    const headCopy = Object.assign({}, snake[0]);
+    snake.push(headCopy);
+  }
+}
 
-    if (snake[0].y < 0) {
-      return alert('game over');
-    }
+document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
+  if (e.which === 37) { // left arrow
+    snakeSpeedHorizontal = -20
+    snakeSpeedVertical = 0;
+    return;
   }
 
-  function scored() {
-    score += 1;
-    let yourScore = document.getElementById('your-score');
-    yourScore.textContent = score;
-    yourScore.textContent = 'Your Score: ' + score;
+  if (e.which === 39) { // right arrow
+    snakeSpeedHorizontal = 20
+    snakeSpeedVertical = 0;
+    return;
   }
 
-  function eatenApple() {
-    if (snake[0].x === randomApplePlaceX && snake[0].y === randomApplePlaceY) {
-      scored();
-      setApplePosition()
-      const headCopy = Object.assign({}, snake[0]);
-      snake.push(headCopy);
-    }
+  if (e.which === 38) { //up arrow
+    snakeSpeedHorizontal = 0;
+    snakeSpeedVertical = -20;
   }
 
-  document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
-    if (e.which === 37) { // left arrow
-      snakeSpeedHorizontal = -20
-      snakeSpeedVertical = 0;
-      return;
-    }
-
-    if (e.which === 39) { // right arrow
-      snakeSpeedHorizontal = 20
-      snakeSpeedVertical = 0;
-      return;
-    }
-
-    if (e.which === 38) { //up arrow
-      snakeSpeedHorizontal = 0;
-      snakeSpeedVertical = -20;
-    }
-
-    if (e.which === 40) { //down arrow
-      snakeSpeedHorizontal = 0;
-      snakeSpeedVertical = 20;
-      return;
-    }
-
-  })
-
-  function drawEverything() {
-    canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
-    canvasContext.beginPath();
-    snake.forEach(function (bodyPart) {
-      canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
-    });
-    canvasContext.fillStyle = "skyblue";
-    canvasContext.fill();
-    canvasContext.closePath();
-
-    canvasContext.fillStyle = 'lightCoral';
-    canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20) //Code for the apple
-
+  if (e.which === 40) { //down arrow
+    snakeSpeedHorizontal = 0;
+    snakeSpeedVertical = 20;
+    return;
   }
+
+})
+
+function drawEverything() {
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
+  canvasContext.beginPath();
+  snake.forEach(function (bodyPart) {
+    canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
+  });
+  canvasContext.fillStyle = "skyblue";
+  canvasContext.fill();
+  canvasContext.closePath();
+
+  canvasContext.fillStyle = 'lightCoral';
+  canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20) //Code for the apple
+
+}
