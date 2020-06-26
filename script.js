@@ -113,15 +113,17 @@ function eatenApple() {
 
 document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
   if (e.which === 37) { // left arrow
-    snakeSpeedHorizontal = -20
+    snakeSpeedHorizontal = -20;
     snakeSpeedVertical = 0;
-    return;
   }
 
   if (e.which === 39) { // right arrow
-    snakeSpeedHorizontal = 20
-    snakeSpeedVertical = 0;
-    return;
+    if (snakeSpeedHorizontal === 0 && snakeSpeedVertical === 0) {
+      snakeSpeedHorizontal = 20
+      snakeSpeedVertical = 0;
+    } else if(snakeSpeedHorizontal === 20 && snakeSpeedVertical === 0) {
+      e.which !== 37;
+    }
   }
 
   if (e.which === 38) { //up arrow
