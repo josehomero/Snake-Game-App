@@ -1,10 +1,16 @@
 const DEBUG = false;
 
 let score = 0;
+
+let gameOver = false;
+
 const canvas = document.getElementById('game-canvas');
-const canvasContext = canvas.getContext('2d')
+const canvasContext = canvas.getContext('2d');
+
+
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
+
 const snake = [
   { x: 280, y: 240 },
   { x: 260, y: 240 },
@@ -31,6 +37,8 @@ window.onload = function () { // function to paint canvas and set interval
     randomApplePlaceY = randomApplePlaceY + 20
   }
 
+
+
   let framesPerSecond = 30;
   setInterval(function () {
     moveTheSnake();
@@ -38,8 +46,19 @@ window.onload = function () { // function to paint canvas and set interval
     snakeBitItself();
     eatenApple();
     drawEverything();
-  }, 10000 / framesPerSecond)
+  }, 10000 / framesPerSecond);
+
+  canvas.addEventListener('click', function () {
+    debugger;
+    if(gameOver === true) {
+      score = 0;
+      gameOver = false;
+    }
+  })
+
 }
+
+
 
 function setApplePosition() { //function to move apple randomly 
   randomApplePlaceX = Math.floor(Math.random() * canvas.width);
@@ -56,10 +75,13 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
+if(gameOver === true) {
+  return
+}
+
   if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
     for (let i = snake.length - 1; i > 0; --i) {
       snake[i].x = snake[i - 1].x;
-      console.log(snake[i].x)
       snake[i].y = snake[i - 1].y;
     }
   }
@@ -68,10 +90,16 @@ function moveTheSnake() { // function to move snake
   snake[0].y = snake[0].y + snakeSpeedVertical;
 }
 
+function gameIsOver() {
+  if (gameOver === true) {
+    score = 0;
+    gameOver = false;
+  }
+}
+
 function snakeBitItself() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
-      console.log(snake[i].x)
       return alert('game over')
     }
   }
@@ -91,7 +119,7 @@ function detectingWalls() {
   }
 
   if (snake[0].y < 0) {
-    return alert('game over');
+    gameOver = true;
   }
 }
 
@@ -118,12 +146,8 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   }
 
   if (e.which === 39) { // right arrow
-    if (snakeSpeedHorizontal === 0 && snakeSpeedVertical === 0) {
-      snakeSpeedHorizontal = 20
-      snakeSpeedVertical = 0;
-    } else if(snakeSpeedHorizontal === 20 && snakeSpeedVertical === 0) {
-      e.which !== 37;
-    }
+    snakeSpeedHorizontal = 20;
+    snakeSpeedVertical = 0;
   }
 
   if (e.which === 38) { //up arrow
@@ -139,9 +163,18 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
 
 })
 
+
 function drawEverything() {
-  canvasContext.clearRect(0, 0, canvas.width, canvas.height);// the snake head
-  canvasContext.beginPath();
+  canvasContext.clearRect(0, 0, canvas.width, canvas.height);
+
+if(gameOver === true) {
+  canvasContext.fillStyle = 'white'
+  canvasContext.fillText(' Game is over: click to continue', 300, 300)
+  return;
+}
+
+
+    canvasContext.beginPath();
   snake.forEach(function (bodyPart) {
     canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
   });
@@ -153,3 +186,23 @@ function drawEverything() {
   canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20) //Code for the apple
 
 }
+
+/* game over notes:
+let gameOver = false;
+if(let gameOver) {
+  return
+}
+canvas.context.fillStyle = 'white'
+canvas.fillText('click to continue', 100, 100)
+
+put in draw everything
+connect to event function
+canvas.addEventListener('mousedown', handleMouseClick)
+
+function handleMouseClick() {
+  if(gameOver) {
+    score = 0;
+    gameOver = false;
+  }
+}
+*/
