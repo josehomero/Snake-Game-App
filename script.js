@@ -141,24 +141,39 @@ function eatenApple() {
 
 document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
   if (e.which === 37) { // left arrow
-    snakeSpeedHorizontal = -20;
-    snakeSpeedVertical = 0;
+    if(snakeSpeedHorizontal === 20) {
+      return
+    } else {
+      snakeSpeedHorizontal = -20;
+      snakeSpeedVertical = 0;
+    }
   }
 
   if (e.which === 39) { // right arrow
-    snakeSpeedHorizontal = 20;
-    snakeSpeedVertical = 0;
+    if(snakeSpeedHorizontal === -20) {
+      return
+    } else {
+      snakeSpeedHorizontal = 20;
+      snakeSpeedVertical = 0;
+    }
   }
 
   if (e.which === 38) { //up arrow
-    snakeSpeedHorizontal = 0;
-    snakeSpeedVertical = -20;
+    if(snakeSpeedVertical === 20) {
+      return
+    } else {
+      snakeSpeedHorizontal = 0;
+      snakeSpeedVertical = -20;
+    }
   }
 
   if (e.which === 40) { //down arrow
-    snakeSpeedHorizontal = 0;
-    snakeSpeedVertical = 20;
-    return;
+    if(snakeSpeedVertical === -20) {
+      return
+    } else {
+      snakeSpeedHorizontal = 0;
+      snakeSpeedVertical = 20;
+    }
   }
 
 })
@@ -187,22 +202,6 @@ if(gameOver === true) {
 
 }
 
-/* game over notes:
-let gameOver = false;
-if(let gameOver) {
-  return
-}
-canvas.context.fillStyle = 'white'
-canvas.fillText('click to continue', 100, 100)
-
-put in draw everything
-connect to event function
-canvas.addEventListener('mousedown', handleMouseClick)
-
-function handleMouseClick() {
-  if(gameOver) {
-    score = 0;
-    gameOver = false;
-  }
-}
+/* 
+stop interval
 */
