@@ -29,16 +29,7 @@ let snakeSpeedVertical = 0;
 let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
-window.onload = function () { // function to paint canvas and set interval
-  setApplePosition()
-
-  if (randomApplePlaceX === snake[0].x || randomApplePlaceX === snake[0].y || randomApplePlaceY === snake[0].x || randomApplePlaceY === snake[0].y) {
-    randomApplePlaceX = randomApplePlaceX + 20 //if statement to not let the apple land on the snake
-    randomApplePlaceY = randomApplePlaceY + 20
-  }
-
-
-
+function gameInterval () { // function setting the game interval
   let framesPerSecond = 30;
   setInterval(function () {
     moveTheSnake();
@@ -47,10 +38,23 @@ window.onload = function () { // function to paint canvas and set interval
     eatenApple();
     drawEverything();
   }, 10000 / framesPerSecond);
+};
 
-  canvas.addEventListener('click', function () {
+window.onload = function () { // function to paint canvas and set interval
+  setApplePosition()
+
+  if (randomApplePlaceX === snake[0].x || randomApplePlaceX === snake[0].y || randomApplePlaceY === snake[0].x || randomApplePlaceY === snake[0].y) {
+    randomApplePlaceX = randomApplePlaceX + 20 //if statement to not let the apple land on the snake
+    randomApplePlaceY = randomApplePlaceY + 20
+  }
+
+gameInterval()
+
+
+  canvas.addEventListener('click', function () { //event listener to reset the game after clicking the screen when game is over
     debugger;
     if(gameOver === true) {
+      clearInterval(gameInterval()) // me trying to stop the game interval
       score = 0;
       gameOver = false;
     }
@@ -90,12 +94,6 @@ if(gameOver === true) {
   snake[0].y = snake[0].y + snakeSpeedVertical;
 }
 
-function gameIsOver() {
-  if (gameOver === true) {
-    score = 0;
-    gameOver = false;
-  }
-}
 
 function snakeBitItself() {
   for (let i = 1; i < snake.length; i++) {
@@ -118,8 +116,8 @@ function detectingWalls() {
     return alert('game over');
   }
 
-  if (snake[0].y < 0) {
-    gameOver = true;
+  if (snake[0].y < 0) { // the top boundary
+    gameOver = true; // test case to blank out the screen because top border was hit
   }
 }
 
@@ -182,7 +180,7 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
 function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-if(gameOver === true) {
+if(gameOver === true) {// if statemenet to blank out the screen after hitting the top wall
   canvasContext.fillStyle = 'white'
   canvasContext.fillText(' Game is over: click to continue', 300, 300)
   return;
