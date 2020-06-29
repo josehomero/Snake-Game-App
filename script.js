@@ -53,11 +53,14 @@ window.onload = function () { // function to paint canvas and set interval
 
 
   canvas.addEventListener('click', function () { //event listener to reset the game after clicking the screen when game is over
-   // debugger;
-    if(gameOver === true) {
-     // clearInterval(timerId) // me trying to stop the game interval
+    // debugger;
+    if (gameOver === true) {
+      // clearInterval(timerId) // me trying to stop the game interval
       score = 0;
+      let yourScore = document.getElementById('your-score');
+      yourScore.textContent = 'Your Score: ' + score;
       gameOver = false;
+
       timerId
     }
   })
@@ -81,9 +84,9 @@ function setApplePosition() { //function to move apple randomly
 }
 
 function moveTheSnake() { // function to move snake
-if(gameOver === true) {
-  return
-}
+  if (gameOver === true) {
+    return
+  }
 
   if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
     for (let i = snake.length - 1; i > 0; --i) {
@@ -131,7 +134,6 @@ function stopInterval() {
 function scored() {
   score += 1;
   let yourScore = document.getElementById('your-score');
-  yourScore.textContent = score;
   yourScore.textContent = 'Your Score: ' + score;
 }
 
@@ -146,7 +148,7 @@ function eatenApple() {
 
 document.addEventListener('keydown', function (e) { // event listener tomove the snake head and eventually snake body
   if (e.which === 37) { // left arrow
-    if(snakeSpeedHorizontal === 20) {
+    if (snakeSpeedHorizontal === 20) {
       return
     } else {
       snakeSpeedHorizontal = -20;
@@ -155,7 +157,7 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   }
 
   if (e.which === 39) { // right arrow
-    if(snakeSpeedHorizontal === -20) {
+    if (snakeSpeedHorizontal === -20) {
       return
     } else {
       snakeSpeedHorizontal = 20;
@@ -164,7 +166,7 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   }
 
   if (e.which === 38) { //up arrow
-    if(snakeSpeedVertical === 20) {
+    if (snakeSpeedVertical === 20) {
       return
     } else {
       snakeSpeedHorizontal = 0;
@@ -173,7 +175,7 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
   }
 
   if (e.which === 40) { //down arrow
-    if(snakeSpeedVertical === -20) {
+    if (snakeSpeedVertical === -20) {
       return
     } else {
       snakeSpeedHorizontal = 0;
@@ -187,14 +189,14 @@ document.addEventListener('keydown', function (e) { // event listener tomove the
 function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
-if(gameOver === true) {// if statemenet to blank out the screen after hitting the top wall
-  canvasContext.fillStyle = 'white'
-  canvasContext.fillText(' Game is over: click to continue', 300, 300)
-  return;
-}
+  if (gameOver === true) {// if statemenet to blank out the screen after hitting the top wall
+    canvasContext.fillStyle = 'white'
+    canvasContext.fillText(' Game is over: click to continue', 300, 300)
+    return;
+  }
 
 
-    canvasContext.beginPath();
+  canvasContext.beginPath();
   snake.forEach(function (bodyPart) {
     canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
   });
@@ -207,6 +209,6 @@ if(gameOver === true) {// if statemenet to blank out the screen after hitting th
 
 }
 
-/* 
+/*
 stop interval
 */
