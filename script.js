@@ -29,16 +29,17 @@ let snakeSpeedVertical = 0;
 let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
-function gameInterval () { // function setting the game interval
-  let framesPerSecond = 30;
-  setInterval(function () {
-    moveTheSnake();
-    detectingWalls();
-    snakeBitItself();
-    eatenApple();
-    drawEverything();
-  }, 10000 / framesPerSecond);
-};
+let framesPerSecond = 30;
+const timerId = setInterval(function () {
+  //console.log('this timer ran')
+  moveTheSnake();
+  detectingWalls();
+  snakeBitItself();
+  eatenApple();
+  drawEverything();
+}, 10000 / framesPerSecond);
+console.log(timerId)
+
 
 window.onload = function () { // function to paint canvas and set interval
   setApplePosition()
@@ -48,13 +49,13 @@ window.onload = function () { // function to paint canvas and set interval
     randomApplePlaceY = randomApplePlaceY + 20
   }
 
-gameInterval()
+  timerId;
 
 
   canvas.addEventListener('click', function () { //event listener to reset the game after clicking the screen when game is over
-    debugger;
+   // debugger;
     if(gameOver === true) {
-      clearInterval(gameInterval()) // me trying to stop the game interval
+     // clearInterval(timerId) // me trying to stop the game interval
       score = 0;
       gameOver = false;
     }
@@ -117,8 +118,13 @@ function detectingWalls() {
   }
 
   if (snake[0].y < 0) { // the top boundary
+    stopInterval();
     gameOver = true; // test case to blank out the screen because top border was hit
   }
+}
+
+function stopInterval() {
+  clearInterval(parseInt(timerId))
 }
 
 function scored() {
