@@ -58,6 +58,7 @@ window.onload = function () { // function to paint canvas and set interval
      // clearInterval(timerId) // me trying to stop the game interval
       score = 0;
       gameOver = false;
+      timerId
     }
   })
 
@@ -124,7 +125,7 @@ function detectingWalls() {
 }
 
 function stopInterval() {
-  clearInterval(parseInt(timerId))
+  clearInterval(timerId)
 }
 
 function scored() {
