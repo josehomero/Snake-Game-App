@@ -30,7 +30,8 @@ let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
 let framesPerSecond = 30;
-const timerId = setInterval(function () {
+debugger;
+let timerId = setInterval(function () {
   //console.log('this timer ran')
   moveTheSnake();
   detectingWalls();
@@ -49,7 +50,7 @@ window.onload = function () { // function to paint canvas and set interval
     randomApplePlaceY = randomApplePlaceY + 20
   }
 
-  timerId;
+
 
 
   canvas.addEventListener('click', function () { //event listener to reset the game after clicking the screen when game is over
@@ -61,7 +62,17 @@ window.onload = function () { // function to paint canvas and set interval
       yourScore.textContent = 'Your Score: ' + score;
       gameOver = false;
 
-      timerId
+      let newInterval = setInterval(function () {
+        //console.log('this timer ran')
+        moveTheSnake();
+        detectingWalls();
+        snakeBitItself();
+        eatenApple();
+        drawEverything();
+      }, 10000 / framesPerSecond);
+
+      newInterval = timerId;
+
     }
   })
 
