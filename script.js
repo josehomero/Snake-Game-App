@@ -11,7 +11,7 @@ const canvasContext = canvas.getContext('2d');
 canvas.style.marginLeft = '30%';
 canvas.style.background = 'LightGreen';
 
-const snake = [
+let snake = [
   { x: 280, y: 240 },
   { x: 260, y: 240 },
   { x: 240, y: 240 },
@@ -26,11 +26,12 @@ let snakeSpeedHorizontal = 0;
 let snakeSpeedVertical = 0;
 
 
+
 let randomApplePlaceX = 0;//variables I want to move the apple randomly with
 let randomApplePlaceY = 0;
 
 let framesPerSecond = 30;
-debugger;
+//debugger;
 let timerId = setInterval(function () {
   //console.log('this timer ran')
   moveTheSnake();
@@ -39,7 +40,7 @@ let timerId = setInterval(function () {
   eatenApple();
   drawEverything();
 }, 10000 / framesPerSecond);
-console.log(timerId)
+
 
 
 window.onload = function () { // function to paint canvas and set interval
@@ -62,6 +63,8 @@ window.onload = function () { // function to paint canvas and set interval
       yourScore.textContent = 'Your Score: ' + score;
       gameOver = false;
 
+      setApplePosition();
+
       let newInterval = setInterval(function () {
         //console.log('this timer ran')
         moveTheSnake();
@@ -71,8 +74,21 @@ window.onload = function () { // function to paint canvas and set interval
         drawEverything();
       }, 10000 / framesPerSecond);
 
-      newInterval = timerId;
+       newInterval = timerId;
+      snake = [
+        { x: 280, y: 240 },
+        { x: 260, y: 240 },
+        { x: 240, y: 240 },
+        { x: 220, y: 240 },
+        { x: 200, y: 240 },
+        { x: 180, y: 240 },
+        { x: 160, y: 240 },
+        { x: 140, y: 240 }
+      ];
+      
 
+      snakeSpeedHorizontal = 0;
+      snakeSpeedVertical = 0;
     }
   })
 
@@ -98,6 +114,7 @@ function moveTheSnake() { // function to move snake
   if (gameOver === true) {
     return
   }
+  console.log(snake[0].y);
 
   if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
     for (let i = snake.length - 1; i > 0; --i) {
@@ -108,6 +125,7 @@ function moveTheSnake() { // function to move snake
 
   snake[0].x = snake[0].x + snakeSpeedHorizontal;
   snake[0].y = snake[0].y + snakeSpeedVertical;
+  
 }
 
 
