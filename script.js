@@ -65,7 +65,7 @@ window.onload = function () { // function to paint canvas and set interval
 
       setApplePosition();
 
-      let newInterval = setInterval(function () {
+      timerId = setInterval(function () {
         //console.log('this timer ran')
         moveTheSnake();
         detectingWalls();
@@ -74,7 +74,6 @@ window.onload = function () { // function to paint canvas and set interval
         drawEverything();
       }, 10000 / framesPerSecond);
 
-       newInterval = timerId;
       snake = [
         { x: 280, y: 240 },
         { x: 260, y: 240 },
@@ -114,7 +113,6 @@ function moveTheSnake() { // function to move snake
   if (gameOver === true) {
     return
   }
-  console.log(snake[0].y);
 
   if (snakeSpeedHorizontal !== 0 || snakeSpeedVertical !== 0) {
     for (let i = snake.length - 1; i > 0; --i) {
@@ -132,32 +130,32 @@ function moveTheSnake() { // function to move snake
 function snakeBitItself() {
   for (let i = 1; i < snake.length; i++) {
     if (snake[0].x === snake[i].x && snake[0].y === snake[i].y) {
-      return alert('game over')
+      stopInterval();
     }
   }
 }
 
 function detectingWalls() {
   if (snake[0].x > canvas.width - 20) {  //if statements to detect the walls
-    return alert('game over');
+    stopInterval();
   }
 
   if (snake[0].x < 0) {
-    return alert('game over')
+    stopInterval();
   }
 
   if (snake[0].y > canvas.height - 20) {
-    return alert('game over');
+    stopInterval();
   }
 
   if (snake[0].y < 0) { // the top boundary
     stopInterval();
-    gameOver = true; // test case to blank out the screen because top border was hit
   }
 }
 
 function stopInterval() {
   clearInterval(timerId)
+  gameOver = true;
 }
 
 function scored() {
