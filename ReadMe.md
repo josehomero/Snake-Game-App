@@ -2,9 +2,9 @@
 
 <br>
 
-A Snake Game App made of JavaSript and CSS/HTML.
+A Snake Game App made using JavaSript and CSS/HTML.
 
-Check it out https://josehomero.github.io/Snake-Game-App/
+Check it out here https://josehomero.github.io/Snake-Game-App/
 
 <img width="729" alt="Snake game snippet" src="https://user-images.githubusercontent.com/58618050/86426335-45c9e200-bc9c-11ea-88ea-66bb9b14ab1e.PNG">
 

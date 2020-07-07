@@ -1,10 +1,14 @@
 let gameOver = false;
 
-let snake = [
-  { x: 280, y: 240 },
-  { x: 260, y: 240 },
-  { x: 240, y: 240 }
-]
+let snake;
+
+let snakeSpeedHorizontal = 0;
+let snakeSpeedVertical = 0;
+
+let randomApplePlaceX = 0;
+let randomApplePlaceY = 0;
+
+const speed = 20;
 
 let framesPerSecond = 75;
 let timerId = setInterval(function () {
@@ -15,12 +19,21 @@ let timerId = setInterval(function () {
   drawEverything();
 }, 10000 / framesPerSecond);
 
+function setSnakePosition() {
+  snake = [
+    { x: 280, y: 240 },
+    { x: 260, y: 240 },
+    { x: 240, y: 240 }
+  ]
+}
+
 window.onload = function () {
-  setApplePosition()
+  setApplePosition();
+  setSnakePosition();
 
   if (randomApplePlaceX === snake[0].x || randomApplePlaceX === snake[0].y || randomApplePlaceY === snake[0].x || randomApplePlaceY === snake[0].y) {
-    randomApplePlaceX = randomApplePlaceX + 20;
-    randomApplePlaceY = randomApplePlaceY + 20;
+    randomApplePlaceX = randomApplePlaceX + speed;
+    randomApplePlaceY = randomApplePlaceY + speed;
   }
 
   canvas.addEventListener('click', function () {
@@ -31,6 +44,7 @@ window.onload = function () {
       gameOver = false;
 
       setApplePosition();
+      setSnakePosition();
 
       timerId = setInterval(function () {
         moveTheSnake();
@@ -40,12 +54,6 @@ window.onload = function () {
         drawEverything();
       }, 10000 / framesPerSecond);
 
-      snake = [
-        { x: 280, y: 240 },
-        { x: 260, y: 240 },
-        { x: 240, y: 240 }
-      ];
-
       snakeSpeedHorizontal = 0;
       snakeSpeedVertical = 0;
     }
@@ -53,42 +61,42 @@ window.onload = function () {
 
 }
 
-let snakeSpeedHorizontal = 0;
-let snakeSpeedVertical = 0;
 document.addEventListener('keydown', function (e) {
-  if (e.which === 37) {
-    if (snakeSpeedHorizontal === 20) {
+  if (e.which === 37) { // left arrow key
+    if (snakeSpeedHorizontal === speed) {
+      return
+    } else if (snakeSpeedHorizontal === 0 && snakeSpeedVertical === 0) {
       return
     } else {
-      snakeSpeedHorizontal = -20;
+      snakeSpeedHorizontal = -speed;
       snakeSpeedVertical = 0;
     }
   }
 
-  if (e.which === 39) {
-    if (snakeSpeedHorizontal === -20) {
+  if (e.which === 39) { // right arrow key
+    if (snakeSpeedHorizontal === -speed) {
       return
     } else {
-      snakeSpeedHorizontal = 20;
+      snakeSpeedHorizontal = speed;
       snakeSpeedVertical = 0;
     }
   }
 
-  if (e.which === 38) {
-    if (snakeSpeedVertical === 20) {
+  if (e.which === 38) { // up arrow key
+    if (snakeSpeedVertical === speed) {
       return
     } else {
       snakeSpeedHorizontal = 0;
-      snakeSpeedVertical = -20;
+      snakeSpeedVertical = -speed;
     }
   }
 
-  if (e.which === 40) {
-    if (snakeSpeedVertical === -20) {
+  if (e.which === 40) { // down arrow key
+    if (snakeSpeedVertical === -speed) {
       return
     } else {
       snakeSpeedHorizontal = 0;
-      snakeSpeedVertical = 20;
+      snakeSpeedVertical = speed;
     }
   }
 
@@ -111,17 +119,15 @@ function moveTheSnake() {
   snake[0].y = snake[0].y + snakeSpeedVertical;
 }
 
-let randomApplePlaceX = 0;
-let randomApplePlaceY = 0;
 function setApplePosition() {
   randomApplePlaceX = Math.floor(Math.random() * canvas.width);
-  randomApplePlaceX = Math.ceil(randomApplePlaceX / 20) * 20;
+  randomApplePlaceX = Math.ceil(randomApplePlaceX / speed) * speed;
   if (randomApplePlaceX === 500) {
     randomApplePlaceX = 480;
   }
 
   randomApplePlaceY = Math.floor(Math.random() * canvas.height);
-  randomApplePlaceY = Math.ceil(randomApplePlaceY / 20) * 20;
+  randomApplePlaceY = Math.ceil(randomApplePlaceY / speed) * speed;
   if (randomApplePlaceY === 500) {
     randomApplePlaceY = 480;
   }
@@ -149,7 +155,7 @@ function eatenApple() {
 }
 
 function detectingWalls() {
-  if (snake[0].x > canvas.width - 20) {
+  if (snake[0].x > canvas.width - speed) {
     stopInterval();
   }
 
@@ -157,7 +163,7 @@ function detectingWalls() {
     stopInterval();
   }
 
-  if (snake[0].y > canvas.height - 20) {
+  if (snake[0].y > canvas.height - speed) {
     stopInterval();
   }
 
@@ -183,19 +189,19 @@ function drawEverything() {
   canvasContext.clearRect(0, 0, canvas.width, canvas.height);
 
   if (gameOver === true) {
-    canvasContext.fillStyle = 'white'
-    canvasContext.fillText(' Game is over: click to continue', 300, 300)
+    canvasContext.fillStyle = 'black';
+    canvasContext.fillText(' Game is over: click to continue', 175, 250)
     return;
   }
 
   canvasContext.beginPath();
   snake.forEach(function (bodyPart) {
-    canvasContext.rect(bodyPart.x, bodyPart.y, 20, 20)
+    canvasContext.rect(bodyPart.x, bodyPart.y, speed, speed)
   });
   canvasContext.fillStyle = "skyblue";
   canvasContext.fill();
   canvasContext.closePath();
 
   canvasContext.fillStyle = 'lightCoral';
-  canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, 20, 20)
+  canvasContext.fillRect(randomApplePlaceX, randomApplePlaceY, speed, speed)
 }
