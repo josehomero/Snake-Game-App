@@ -191,6 +191,7 @@ function drawEverything() {
   if (gameOver === true) {
     canvasContext.fillStyle = 'black';
     canvasContext.fillText(' Game is over: click to continue', 175, 250)
+    canvasContext.font.replace(/\d+px/, '200px')
     return;
   }
 
